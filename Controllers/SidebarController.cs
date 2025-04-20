@@ -5,7 +5,7 @@ namespace CSharpBookViaASP.Controllers {
 
         public IActionResult Arrays() {
             ViewData["Message"] = "Это Arrays из SidebarController.";
-            return View();
+            return View("~/Views/Sidebar/Arrays/Arrays.cshtml");
         }
         public IActionResult NewArticle() {
             ViewData["Message"] = "Это NewArticle из SidebarController.";
