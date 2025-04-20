@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Массивы в C#";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>@ViewData["Message"]</p>
+
+<hr />
+
+<h2>Что такое массив?</h2>
+<p>Массив — это структура данных, которая хранит фиксированное количество элементов одного типа.</p>
+
+<h3>Пример кода</h3>
+<pre><code class="language-csharp">
+int[] numbers = new int[] { 1, 2, 3, 4, 5 };
+foreach (int number in numbers)
+{
+    Console.WriteLine(number);
+}
+</code></pre>
+
+<h3>Изображение</h3>
+<img src="~/images/array-diagram.png" alt="Диаграмма массива" class="img-fluid" />
+
+<hr />
+
+<p>Массивы можно многомерными, использовать методы `Array.Sort()` и многое другое.</p>
