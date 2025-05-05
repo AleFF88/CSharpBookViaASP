@@ -8,20 +8,108 @@
 
 <hr />
 
-<h2>Что такое массив?</h2>
-<p>Массив — это структура данных, которая хранит фиксированное количество элементов одного типа.</p>
+<h2>Массивы.</h2>
+<p>
+    В языке C# массив — это структура данных, которая хранит <b>фиксированное</b> количество элементов <b>одного</b> типа.
+    Базовым классом для массивов является System.Array, который происходит от <a href="https://www.example.com">System.Object</a>.Следовательно массивы являются <a href="https://www.example.com">ссылочным типом</a> данных и размещаются в <a href="https://www.example.com">управляемой куче</a>. Так же из этого следует то, что переменная не содержит сам массив, а только указатель на него в куче.
+</p>
 
-<h3>Пример кода</h3>
-<pre><code class="language-csharp">
-int[] numbers = new int[] { 1, 2, 3, 4, 5 };
-foreach (int number in numbers)
-{
-    Console.WriteLine(number);
-}
-</code></pre>
+<h3>Создание массивов.</h3>
+    <p>
+    <pre><code class="language-csharp">
+        int[] numbers;
+        numbers = new int[] { 1, 2, 3, 4, 5 };
+        foreach (int number in numbers)
+        {
+            Console.WriteLine(number);
+        }
+    </code></pre>
+    В данном фрагменте кода сначаоа мы объявляем переменную массива, начальное значение которой будет null. В следующей строке мы создаем сам массив и заполняем его данными. Компилятор автоматически выделит память на необходимое количество элементов и размерность массива станет равна 5 элементам. При необходимости мы можем явно указать размерность массива при его создании <code>numbers = new int[100];</code><br>
+    Обратите внимание, что нумерация элементов в массиве начинается с 0.
+</p>
+
+<p>
+    Массивы можно создавать не указывая тип данных, если сразу происходит инициализация значений массива. Компилятор сам определит тип данных и размерность массива.
+    <pre><code class="language-csharp">
+        var stringArray = new[] {"foo","fighters","band"};
+    </code></pre>
+    Так же возможно явно указать тип переменной и не использовать оператор <code>new</code>.
+    <pre><code class="language-csharp">
+      String[] stringArray = {"foo","fighters","band"};
+    </code></pre>
+    При использовании таких способов инициализации следует соблюдать соглашение о коде (code convention), принятое в вашей организации.
+</p>
+
+
+<h3>Копирование массивов.</h3>
+<p>
+    Массив нельзя скопировать просто выполнив операцию присвоения с переменными:
+    <pre><code class="language-csharp">
+        int[] numbers1 = new int[3] {1,2,3};
+        int[] numbers2 = new int[3];
+        numbers2 = numbers1;
+    </code></pre>
+    Поскольку массивы являются ссылочным типом, то мы получим не копию первого массива, а ссылку на него же. Фактически обе переменные будут ссылаться на один и тот же участок памяти. При изменении данных с использованим первой переменной, мы увидим то же самое изменение при обращении ко второй переменной. Для копирования массивов необходимо применять встроенный в System.Arra метод копирования:
+    <pre><code class="language-csharp">
+        Array.Copy(numbers1, numbers2, numbers1.Length);
+    </code></pre>
+    При это следует контролировать, что размерность массивов равна.
+</p>
+
+<details>
+    <summary>Пример <b>неправильного</b> копирование массива. Показать/скрыть код</summary>
+    <p>
+        <pre> <code>
+            int[] numbers1 = new int[3] { 1, 2, 3 };
+            int[] numbers2 = new int[3];
+            numbers2 = numbers1;
+
+            numbers2[0] = 10;
+            PrintArray(numbers1);
+            PrintArray(numbers2);
+            
+            void PrintArray(int[] arr) {
+                for (int i = 0; i < arr.Length; i++) {
+                    Console.WriteLine($" item {i} = {arr[i]}");
+                }
+                Console.WriteLine();
+            }
+        </code></pre>
+    Результат будет выглядеть следующим образом:
+        <br>item 0 = 10
+        <br>item 1 = 2
+        <br>item 2 = 3
+        <br>
+        <br>item 0 = 10
+        <br>item 1 = 2
+        <br>item 2 = 3
+    </p>
+</details>
+
+<details>
+    <summary>Пример <b>правильного</b> копирование массива. Показать/скрыть код</summary>
+    <p>
+        <pre> <code>
+            int[] numbers1 = new int[3] { 1, 2, 3 };
+            int[] numbers2 = new int[3];
+
+            Array.Copy(numbers1, numbers2, numbers1.Length);
+            numbers2[0] = 100;
+            PrintArray(numbers1);
+            PrintArray(numbers2);         
+        </code></pre>
+    Результат будет выглядеть следующим образом:
+        <br>item 0 = 1
+        <br>item 1 = 2
+        <br>item 2 = 3
+        <br>
+        <br>item 0 = 100
+        <br>item 1 = 2
+        <br>item 2 = 3
+    </p>
+</details>
 
 <h3>Изображение</h3>
-<img src="~/images/array-diagram.png" alt="Диаграмма массива" class="img-fluid" />
 
 <hr />
 
